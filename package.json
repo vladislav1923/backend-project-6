@@ -5,6 +5,7 @@
    "engines": {
       "node": ">=16.x"
    },
+   "main": "server/plugin.js",
    "scripts": {
       "prebuild": "rm -rf dist",
       "test": "jest --verbose --runInBand",
