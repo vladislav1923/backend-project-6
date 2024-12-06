@@ -39,6 +39,8 @@ export default {
       users: {
         id: 'ID',
         email: 'Email',
+        firstName: 'Name',
+        lastName: 'Surname',
         createdAt: 'Created at',
         new: {
           submit: 'Register',

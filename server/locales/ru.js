@@ -39,6 +39,8 @@ export default {
       users: {
         id: 'ID',
         email: 'Email',
+        firstName: 'Имя',
+        lastName: 'Фамилия',
         createdAt: 'Дата создания',
         new: {
           submit: 'Сохранить',

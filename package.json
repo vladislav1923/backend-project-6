@@ -20,16 +20,7 @@
          "dotenv/config"
       ]
    },
-   "author": "Stanislav Dzisiak",
    "license": "ISC",
-   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/hexlet-boilerplates/fastify-nodejs-application.git"
-   },
-   "bugs": {
-      "url": "https://github.com/hexlet-boilerplates/fastify-nodejs-application/issues"
-   },
-   "homepage": "https://github.com/hexlet-boilerplates/fastify-nodejs-application.git#readme",
    "dependencies": {
       "@vscode/sqlite3": "^5.0.8",
       "@fastify/formbody": "^7.0.1",
