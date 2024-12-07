@@ -97,6 +97,27 @@ describe('test users CRUD', () => {
     expect(updatedUser.email).not.toBe(user.email);
   });
 
+  it('delete', async () => {
+    const params = testData.users.new;
+    await app.inject({
+      method: 'POST',
+      url: app.reverse('users'),
+      payload: {
+        data: params,
+      },
+    });
+
+    const user = await models.user.query().findOne({ email: params.email });
+    const response = await app.inject({
+      method: 'DELETE',
+      url: app.reverse('deleteUser', { id: user.id }),
+    });
+
+    expect(response.statusCode).toBe(302);
+    const deletedUser = await models.user.query().findById(user.id);
+    expect(deletedUser).toBeUndefined();
+  });
+
   afterEach(async () => {
     // Пока Segmentation fault: 11
     // после каждого теста откатываем миграции

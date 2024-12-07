@@ -54,5 +54,17 @@ export default (app) => {
       }
 
       return reply;
+    })
+    .delete('/users/:id', { name: 'deleteUser' }, async (req, reply) => {
+      const user = await app.objection.models.user.query().findById(req.params.id);
+      if (!user) {
+        req.flash('error', i18next.t('flash.users.delete.error'));
+        return reply.redirect(app.reverse('users'));
+      }
+
+      await user.$query().delete();
+      req.flash('info', i18next.t('flash.users.delete.success'));
+      reply.redirect(app.reverse('root'));
+      return reply;
     });
 };

@@ -22,6 +22,10 @@ export default {
           error: 'Failed to save changes',
           success: 'User updated successfully',
         },
+        delete: {
+          error: 'Failed to delete user',
+          success: 'User deleted successfully',
+        },
       },
       authError: 'Access denied! Please login',
     },

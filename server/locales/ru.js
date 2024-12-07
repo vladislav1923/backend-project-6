@@ -57,6 +57,10 @@ export default {
           submit: 'Сохранить',
           title: 'Редатирование',
         },
+        delete: {
+          error: 'Пользователь не найден',
+          success: 'Пользователь удалён',
+        },
       },
       welcome: {
         index: {
