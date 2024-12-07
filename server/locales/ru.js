@@ -18,6 +18,10 @@ export default {
           error: 'Не удалось зарегистрировать',
           success: 'Пользователь успешно зарегистрирован',
         },
+        update: {
+          error: 'Не удалось сохранить изменения',
+          success: 'Пользователь успешно обновлён',
+        },
       },
       authError: 'Доступ запрещён! Пожалуйста, авторизируйтесь.',
     },
@@ -32,6 +36,8 @@ export default {
     views: {
       session: {
         new: {
+          email: 'Почта',
+          password: 'Пароль',
           signIn: 'Вход',
           submit: 'Войти',
         },
@@ -41,10 +47,15 @@ export default {
         email: 'Email',
         firstName: 'Имя',
         lastName: 'Фамилия',
+        password: 'Пароль',
         createdAt: 'Дата создания',
         new: {
           submit: 'Сохранить',
           signUp: 'Регистрация',
+        },
+        edit: {
+          submit: 'Сохранить',
+          title: 'Редатирование',
         },
       },
       welcome: {

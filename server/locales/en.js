@@ -18,6 +18,10 @@ export default {
           error: 'Failed to register',
           success: 'User registered successfully',
         },
+        update: {
+          error: 'Failed to save changes',
+          success: 'User updated successfully',
+        },
       },
       authError: 'Access denied! Please login',
     },
@@ -32,6 +36,8 @@ export default {
     views: {
       session: {
         new: {
+          email: 'Email',
+          password: 'Password',
           signIn: 'Login',
           submit: 'Login',
         },
@@ -39,12 +45,17 @@ export default {
       users: {
         id: 'ID',
         email: 'Email',
-        firstName: 'Name',
-        lastName: 'Surname',
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        password: 'Password',
         createdAt: 'Created at',
         new: {
           submit: 'Register',
           signUp: 'Register',
+        },
+        edit: {
+          submit: 'Save',
+          title: 'Edit',
         },
       },
       welcome: {
