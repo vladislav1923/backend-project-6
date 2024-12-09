@@ -39,7 +39,7 @@ export default (app) => {
     .post('/users/:id', { name: 'updateUser' }, async (req, reply) => {
       const user = await app.objection.models.user.query().findById(req.params.id);
       if (!user) {
-        req.flash('error', i18next.t('flash.users.edit.error'));
+        req.flash('error', i18next.t('flash.users.update.error'));
         return reply.redirect(app.reverse('users'));
       }
 
@@ -47,8 +47,7 @@ export default (app) => {
         await user.$query().patch(req.body.data);
         req.flash('info', i18next.t('flash.users.update.success'));
         reply.redirect(app.reverse('root'));
-      } catch ({ data, message }) {
-        console.log('ERROR MESSAGE: ', message);
+      } catch ({ data }) {
         req.flash('error', i18next.t('flash.users.update.error'));
         reply.render('users/edit', { user, errors: data });
       }

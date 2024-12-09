@@ -27,11 +27,26 @@ export default {
           success: 'User deleted successfully',
         },
       },
+      statuses: {
+        create: {
+          error: 'Failed to create status',
+          success: 'Status created successfully',
+        },
+        update: {
+          error: 'Failed to save changes',
+          success: 'Status updated successfully',
+        },
+        delete: {
+          error: 'Failed to delete status',
+          success: 'Status deleted successfully',
+        },
+      },
       authError: 'Access denied! Please login',
     },
     layouts: {
       application: {
         users: 'Users',
+        statuses: 'Statuses',
         signIn: 'Login',
         signUp: 'Register',
         signOut: 'Logout',
@@ -56,6 +71,19 @@ export default {
         new: {
           submit: 'Register',
           signUp: 'Register',
+        },
+        edit: {
+          submit: 'Save',
+          title: 'Edit',
+        },
+      },
+      statuses: {
+        id: 'ID',
+        name: 'Name',
+        createdAt: 'Created at',
+        new: {
+          submit: 'Save',
+          title: 'Create',
         },
         edit: {
           submit: 'Save',

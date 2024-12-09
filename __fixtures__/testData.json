@@ -12,5 +12,10 @@
       "firstName": "Lawrence",
       "lastName": "Kulas"
     }
+  },
+  "statuses": {
+    "new": {
+      "name": "In Progress"
+    }
   }
 }
