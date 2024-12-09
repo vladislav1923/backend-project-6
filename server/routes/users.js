@@ -15,12 +15,22 @@ export default (app) => {
       return reply;
     })
     .get('/users/:id/edit', { name: 'editUser' }, async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        req.flash('info', i18next.t('flash.authError'));
+        return reply.redirect('/session/new');
+      }
+
       const user = await app.objection.models.user.query().findById(req.params.id);
       delete user.passwordDigest;
       reply.render('users/edit', { user });
       return reply;
     })
     .post('/users', async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        req.flash('info', i18next.t('flash.authError'));
+        return reply.redirect('/session/new');
+      }
+
       const user = new app.objection.models.user();
       user.$set(req.body.data);
 
@@ -37,6 +47,11 @@ export default (app) => {
       return reply;
     })
     .post('/users/:id', { name: 'updateUser' }, async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        req.flash('info', i18next.t('flash.authError'));
+        return reply.redirect('/session/new');
+      }
+
       const user = await app.objection.models.user.query().findById(req.params.id);
       if (!user) {
         req.flash('error', i18next.t('flash.users.update.error'));
@@ -55,6 +70,11 @@ export default (app) => {
       return reply;
     })
     .delete('/users/:id', { name: 'deleteUser' }, async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        req.flash('info', i18next.t('flash.authError'));
+        return reply.redirect('/session/new');
+      }
+
       const user = await app.objection.models.user.query().findById(req.params.id);
       if (!user) {
         req.flash('error', i18next.t('flash.users.delete.error'));
