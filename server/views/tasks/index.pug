@@ -1,0 +1,23 @@
+extends ../layouts/application.pug
+
+block content
+    table.table.table-striped
+        thead
+            tr
+                th= t('tasks.statuses.id')
+                th= t('tasks.statuses.name')
+                th= t('tasks.statuses.description')
+                th= t('tasks.statuses.status')
+                th= t('tasks.statuses.creator')
+                th= t('tasks.statuses.executor')
+                th= t('tasks.statuses.createdAt')
+        tbody
+            each status in statuses
+                tr
+                    td= task.id
+                    td= task.name
+                    td= task.description
+                    td= task.status
+                    td= getUserName(task.creator)
+                    td= getUserName(task.executor)
+                    td= formatDate(task.createdAt)

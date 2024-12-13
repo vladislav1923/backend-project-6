@@ -29,4 +29,10 @@ export default (app) => ({
     const date = new Date(str);
     return date.toLocaleString();
   },
+  getStatusName(status) {
+    return status?.name;
+  },
+  getUserName(user) {
+    return `${user?.firstName} ${user?.lastName}`;
+  },
 });
