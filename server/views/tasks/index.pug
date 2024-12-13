@@ -4,15 +4,15 @@ block content
     table.table.table-striped
         thead
             tr
-                th= t('tasks.statuses.id')
-                th= t('tasks.statuses.name')
-                th= t('tasks.statuses.description')
-                th= t('tasks.statuses.status')
-                th= t('tasks.statuses.creator')
-                th= t('tasks.statuses.executor')
-                th= t('tasks.statuses.createdAt')
+                th= t('views.tasks.id')
+                th= t('views.tasks.name')
+                th= t('views.tasks.description')
+                th= t('views.tasks.status')
+                th= t('views.tasks.creator')
+                th= t('views.tasks.executor')
+                th= t('views.tasks.createdAt')
         tbody
-            each status in statuses
+            each task in tasks
                 tr
                     td= task.id
                     td= task.name

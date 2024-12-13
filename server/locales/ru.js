@@ -102,6 +102,27 @@ export default {
           more: 'Узнать Больше',
         },
       },
+      tasks: {
+        id: 'ID',
+        name: 'Имя',
+        description: 'Описание',
+        status: 'Статус',
+        creator: 'Автор',
+        executor: 'Исполнитель',
+        createdAt: 'Дата создания',
+        new: {
+          submit: 'Сохранить',
+          title: 'Создать',
+        },
+        edit: {
+          submit: 'Сохранить',
+          title: 'Редатирование',
+        },
+        delete: {
+          error: 'Задача не найдена',
+          success: 'Задача удалена',
+        },
+      },
     },
   },
 };

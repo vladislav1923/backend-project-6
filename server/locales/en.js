@@ -98,6 +98,23 @@ export default {
           more: 'Learn more',
         },
       },
+      tasks: {
+        id: 'ID',
+        name: 'Name',
+        description: 'Description',
+        status: 'Status',
+        creator: 'Creator',
+        executor: 'Executor',
+        createdAt: 'Created at',
+        new: {
+          submit: 'Save',
+          title: 'Create',
+        },
+        edit: {
+          submit: 'Save',
+          title: 'Edit',
+        },
+      },
     },
   },
 };

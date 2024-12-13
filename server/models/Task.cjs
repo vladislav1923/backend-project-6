@@ -1,9 +1,9 @@
 // @ts-check
 const BaseModel = require('./BaseModel.cjs');
 
-module.exports = class User extends BaseModel {
+module.exports = class Task extends BaseModel {
   static get tableName() {
-    return 'users';
+    return 'tasks';
   }
 
   static get jsonSchema() {
