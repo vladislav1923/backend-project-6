@@ -47,6 +47,7 @@ export default {
       application: {
         users: 'Users',
         statuses: 'Statuses',
+        tasks: 'Tasks',
         signIn: 'Login',
         signUp: 'Register',
         signOut: 'Logout',
