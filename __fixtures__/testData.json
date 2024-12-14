@@ -14,8 +14,17 @@
     }
   },
   "statuses": {
-    "new": {
+    "inProgress": {
+      "name": "In Progress"
+    },
+    "onHold": {
       "name": "In Progress"
     }
+  },
+  "tasks": {
+      "new": {
+        "name": "Task 1",
+        "description": "Description for Task 1"
+      }
   }
 }

@@ -11,6 +11,7 @@ describe('test users CRUD', () => {
   let app;
   let knex;
   let models;
+  let cookies;
   const testData = getTestData();
 
   beforeAll(async () => {
@@ -22,12 +23,20 @@ describe('test users CRUD', () => {
     knex = app.objection.knex;
     models = app.objection.models;
 
-    // TODO: пока один раз перед тестами
-    // тесты не должны зависеть друг от друга
-    // перед каждым тестом выполняем миграции
-    // и заполняем БД тестовыми данными
     await knex.migrate.latest();
     await prepareData(app);
+
+    const responseSignIn = await app.inject({
+      method: 'POST',
+      url: app.reverse('session'),
+      payload: {
+        data: testData.users.existing,
+      },
+    });
+
+    const [sessionCookie] = responseSignIn.cookies;
+    const { name, value } = sessionCookie;
+    cookies = { [name]: value };
   });
 
   beforeEach(async () => {
@@ -59,6 +68,7 @@ describe('test users CRUD', () => {
       payload: {
         data: params,
       },
+      cookies,
     });
 
     expect(response.statusCode).toBe(302);
@@ -78,6 +88,7 @@ describe('test users CRUD', () => {
       payload: {
         data: params,
       },
+      cookies,
     });
 
     const user = await models.user.query().findOne({ email: params.email });
@@ -89,6 +100,7 @@ describe('test users CRUD', () => {
       payload: {
         data: { ...params, email: newEmail },
       },
+      cookies,
     });
 
     expect(response.statusCode).toBe(302);
@@ -105,12 +117,14 @@ describe('test users CRUD', () => {
       payload: {
         data: params,
       },
+      cookies,
     });
 
     const user = await models.user.query().findOne({ email: params.email });
     const response = await app.inject({
       method: 'DELETE',
       url: app.reverse('deleteUser', { id: user.id }),
+      cookies,
     });
 
     expect(response.statusCode).toBe(302);

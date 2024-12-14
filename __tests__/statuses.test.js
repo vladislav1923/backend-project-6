@@ -9,6 +9,7 @@ describe('test statuses CRUD', () => {
   let app;
   let knex;
   let models;
+  let cookies;
   const testData = getTestData();
 
   beforeAll(async () => {
@@ -19,13 +20,20 @@ describe('test statuses CRUD', () => {
     await init(app);
     knex = app.objection.knex;
     models = app.objection.models;
-
-    // TODO: пока один раз перед тестами
-    // тесты не должны зависеть друг от друга
-    // перед каждым тестом выполняем миграции
-    // и заполняем БД тестовыми данными
     await knex.migrate.latest();
     await prepareData(app);
+
+    const responseSignIn = await app.inject({
+      method: 'POST',
+      url: app.reverse('session'),
+      payload: {
+        data: testData.users.existing,
+      },
+    });
+
+    const [sessionCookie] = responseSignIn.cookies;
+    const { name, value } = sessionCookie;
+    cookies = { [name]: value };
   });
 
   beforeEach(async () => {
@@ -44,19 +52,21 @@ describe('test statuses CRUD', () => {
     const response = await app.inject({
       method: 'GET',
       url: app.reverse('newStatus'),
+      cookies,
     });
 
     expect(response.statusCode).toBe(200);
   });
 
   it('create', async () => {
-    const params = testData.statuses.new;
+    const params = testData.statuses.inProgress;
     const response = await app.inject({
       method: 'POST',
       url: app.reverse('statuses'),
       payload: {
         data: params,
       },
+      cookies,
     });
 
     expect(response.statusCode).toBe(302);
@@ -68,13 +78,14 @@ describe('test statuses CRUD', () => {
   });
 
   it('update', async () => {
-    const params = testData.statuses.new;
+    const params = testData.statuses.inProgress;
     await app.inject({
       method: 'POST',
       url: app.reverse('statuses'),
       payload: {
         data: params,
       },
+      cookies,
     });
 
     const status = await models.status.query().findOne({ name: params.name });
@@ -86,6 +97,7 @@ describe('test statuses CRUD', () => {
       payload: {
         data: { name: newName },
       },
+      cookies,
     });
 
     expect(response.statusCode).toBe(302);
@@ -95,19 +107,21 @@ describe('test statuses CRUD', () => {
   });
 
   it('delete', async () => {
-    const params = testData.statuses.new;
+    const params = testData.statuses.inProgress;
     await app.inject({
       method: 'POST',
       url: app.reverse('statuses'),
       payload: {
         data: params,
       },
+      cookies,
     });
 
     const status = await models.status.query().findOne({ name: params.name });
     const response = await app.inject({
       method: 'DELETE',
       url: app.reverse('deleteStatus', { id: status.id }),
+      cookies,
     });
 
     expect(response.statusCode).toBe(302);
