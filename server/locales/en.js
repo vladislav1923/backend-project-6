@@ -121,13 +121,21 @@ export default {
         executor: 'Executor',
         createdAt: 'Created at',
         notAssigned: 'Not assigned',
+        back: 'Back To The List',
         new: {
           submit: 'Save',
           title: 'Create New Task',
         },
         edit: {
           submit: 'Save',
-          title: 'Edit',
+          title: 'Edit Task',
+        },
+        delete: {
+          error: 'Task not found',
+          success: 'Task deleted',
+        },
+        one: {
+          title: 'Task №',
         },
       },
     },

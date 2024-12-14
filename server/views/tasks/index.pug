@@ -16,7 +16,8 @@ block content
             each task in tasks
                 tr
                     td= task.id
-                    td= task.name
+                    td
+                        a(href=`/tasks/${task.id}`)= task.name
                     td= task.description
                     td= getStatusName(task.status)
                     td= getUserName(task.creator)

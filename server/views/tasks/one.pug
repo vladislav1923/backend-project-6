@@ -1,0 +1,15 @@
+extends ../layouts/application.pug
+
+block header
+    = t('views.tasks.one.title') + task.id
+
+block content
+    p= t('views.tasks.name') + ': ' + task.name
+    p= t('views.tasks.description') + ': ' + task.description
+    p= t('views.tasks.status') + ': ' + getStatusName(status)
+    p= t('views.tasks.creator') + ': ' + getUserName(creator)
+    p= t('views.tasks.executor') + ': ' + (getUserName(executor) || t('views.tasks.notAssigned'))
+    p= t('views.tasks.createdAt') + ': ' + formatDate(task.createdAt)
+    a(href=`/tasks/${task.id}/edit`)= t('views.tasks.edit.title')
+    br
+    a(href=route('tasks'))= t('views.tasks.back')

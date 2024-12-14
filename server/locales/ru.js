@@ -83,7 +83,6 @@ export default {
         lastName: 'Фамилия',
         password: 'Пароль',
         createdAt: 'Дата создания',
-        notAssigned: 'Не назначена',
         new: {
           submit: 'Сохранить',
           signUp: 'Регистрация',
@@ -125,17 +124,22 @@ export default {
         creator: 'Автор',
         executor: 'Исполнитель',
         createdAt: 'Дата создания',
+        notAssigned: 'Не назначена',
+        back: 'Назад к списку',
         new: {
           submit: 'Сохранить',
           title: 'Создать новую задачу',
         },
         edit: {
           submit: 'Сохранить',
-          title: 'Редатирование',
+          title: 'Редатирование задачи',
         },
         delete: {
           error: 'Задача не найдена',
           success: 'Задача удалена',
+        },
+        one: {
+          title: 'Задача №',
         },
       },
     },
