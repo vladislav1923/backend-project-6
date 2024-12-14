@@ -26,11 +26,6 @@ export default (app) => {
       return reply;
     })
     .post('/users', async (req, reply) => {
-      if (!req.isAuthenticated()) {
-        req.flash('info', i18next.t('flash.authError'));
-        return reply.redirect('/session/new');
-      }
-
       const user = new app.objection.models.user();
       user.$set(req.body.data);
 
@@ -39,7 +34,8 @@ export default (app) => {
         await app.objection.models.user.query().insert(validUser);
         req.flash('info', i18next.t('flash.users.create.success'));
         reply.redirect(app.reverse('root'));
-      } catch ({ data }) {
+      } catch ({ data, message }) {
+        console.error('Error during creating a user', message);
         req.flash('error', i18next.t('flash.users.create.error'));
         reply.render('users/new', { user, errors: data });
       }
@@ -62,7 +58,8 @@ export default (app) => {
         await user.$query().patch(req.body.data);
         req.flash('info', i18next.t('flash.users.update.success'));
         reply.redirect(app.reverse('root'));
-      } catch ({ data }) {
+      } catch ({ data, message }) {
+        console.error('Error during updating a user', message);
         req.flash('error', i18next.t('flash.users.update.error'));
         reply.render('users/edit', { user, errors: data });
       }

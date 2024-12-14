@@ -33,6 +33,10 @@ export default (app) => ({
     return status?.name;
   },
   getUserName(user) {
+    if (!user) {
+      return null;
+    }
+
     return `${user?.firstName} ${user?.lastName}`;
   },
 });

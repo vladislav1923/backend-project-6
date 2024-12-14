@@ -12,6 +12,7 @@ export default (app) => {
       if (err) {
         return app.httpErrors.internalServerError(err);
       }
+
       if (!user) {
         const signInForm = req.body.data;
         const errors = {
@@ -22,7 +23,7 @@ export default (app) => {
       }
       await req.logIn(user);
       req.flash('success', i18next.t('flash.session.create.success'));
-      reply.redirect(app.reverse('root'));
+      reply.redirect(app.reverse('protected'));
       return reply;
     }))
     .delete('/session', (req, reply) => {

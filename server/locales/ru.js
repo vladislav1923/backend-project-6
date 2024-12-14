@@ -41,6 +41,20 @@ export default {
           success: 'Удаление статуса прошло успешно',
         },
       },
+      tasks: {
+        create: {
+          error: 'Не удалось создать задачу',
+          success: 'Задача успешно создана',
+        },
+        update: {
+          error: 'Ошибка сохранения изменений',
+          success: 'Задача успешно обновлена',
+        },
+        delete: {
+          error: 'Не удалось удалить задачу',
+          success: 'Удаление задачи прошло успешно',
+        },
+      },
       authError: 'Доступ запрещён! Пожалуйста, авторизируйтесь.',
     },
     layouts: {
@@ -69,6 +83,7 @@ export default {
         lastName: 'Фамилия',
         password: 'Пароль',
         createdAt: 'Дата создания',
+        notAssigned: 'Не назначена',
         new: {
           submit: 'Сохранить',
           signUp: 'Регистрация',
@@ -88,7 +103,7 @@ export default {
         createdAt: 'Дата создания',
         new: {
           submit: 'Сохранить',
-          title: 'Создать',
+          title: 'Создать новый статус',
         },
         edit: {
           submit: 'Сохранить',
@@ -112,7 +127,7 @@ export default {
         createdAt: 'Дата создания',
         new: {
           submit: 'Сохранить',
-          title: 'Создать',
+          title: 'Создать новую задачу',
         },
         edit: {
           submit: 'Сохранить',

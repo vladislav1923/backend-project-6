@@ -1,6 +1,7 @@
 extends ../layouts/application.pug
 
 block content
+    a(href=route('newTask'))= t('views.tasks.new.title')
     table.table.table-striped
         thead
             tr
@@ -17,7 +18,7 @@ block content
                     td= task.id
                     td= task.name
                     td= task.description
-                    td= task.status
+                    td= getStatusName(task.status)
                     td= getUserName(task.creator)
-                    td= getUserName(task.executor)
+                    td= getUserName(task.executor) || t('views.tasks.notAssigned')
                     td= formatDate(task.createdAt)

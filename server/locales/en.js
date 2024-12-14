@@ -41,6 +41,20 @@ export default {
           success: 'Status deleted successfully',
         },
       },
+      tasks: {
+        create: {
+          error: 'Failed to create task',
+          success: 'Task created successfully',
+        },
+        update: {
+          error: 'Failed to save changes',
+          success: 'Task updated successfully',
+        },
+        delete: {
+          error: 'Failed to delete task',
+          success: 'Task deleted successfully',
+        },
+      },
       authError: 'Access denied! Please login',
     },
     layouts: {
@@ -84,7 +98,7 @@ export default {
         createdAt: 'Created at',
         new: {
           submit: 'Save',
-          title: 'Create',
+          title: 'Create New Status',
         },
         edit: {
           submit: 'Save',
@@ -106,9 +120,10 @@ export default {
         creator: 'Creator',
         executor: 'Executor',
         createdAt: 'Created at',
+        notAssigned: 'Not assigned',
         new: {
           submit: 'Save',
-          title: 'Create',
+          title: 'Create New Task',
         },
         edit: {
           submit: 'Save',

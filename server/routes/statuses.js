@@ -42,8 +42,9 @@ export default (app) => {
         const validStatus = await app.objection.models.status.fromJson(req.body.data);
         await app.objection.models.status.query().insert(validStatus);
         req.flash('info', i18next.t('flash.statuses.create.success'));
-        reply.redirect(app.reverse('root'));
-      } catch ({ data }) {
+        reply.redirect(app.reverse('statuses'));
+      } catch ({ data, message }) {
+        console.error('Error during creating a status', message);
         req.flash('error', i18next.t('flash.statuses.create.error'));
         reply.render('statuses/new', { status, errors: data });
       }
@@ -66,7 +67,8 @@ export default (app) => {
         await status.$query().patch(req.body.data);
         req.flash('info', i18next.t('flash.statuses.update.success'));
         reply.redirect(app.reverse('root'));
-      } catch ({ data }) {
+      } catch ({ data, message }) {
+        console.error('Error during updating a status', message);
         req.flash('error', i18next.t('flash.statuses.update.error'));
         reply.render('users/edit', { status, errors: data });
       }
