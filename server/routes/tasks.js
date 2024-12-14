@@ -122,5 +122,22 @@ export default (app) => {
       }
 
       return reply;
+    })
+    .delete('/tasks/:id', { name: 'deleteTask' }, async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        req.flash('info', i18next.t('flash.authError'));
+        return reply.redirect('/session/new');
+      }
+
+      const task = await app.objection.models.task.query().findById(req.params.id);
+      if (!task) {
+        req.flash('error', i18next.t('flash.tasks.delete.error'));
+        return reply.redirect(app.reverse('tasks'));
+      }
+
+      await task.$query().delete();
+      req.flash('info', i18next.t('flash.tasks.delete.success'));
+      reply.redirect(app.reverse('root'));
+      return reply;
     });
 };
