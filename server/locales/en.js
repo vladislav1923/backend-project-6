@@ -21,10 +21,15 @@ export default {
         update: {
           error: 'Failed to save changes',
           success: 'User updated successfully',
+          forbidden: 'You cannot update other users',
+        },
+        edit: {
+          forbidden: 'You cannot edit other users',
         },
         delete: {
           error: 'Failed to delete user',
           success: 'User deleted successfully',
+          forbidden: 'You cannot delete other users',
         },
       },
       statuses: {
@@ -98,6 +103,7 @@ export default {
         lastName: 'Last Name',
         password: 'Password',
         createdAt: 'Created at',
+        actions: 'Actions',
         new: {
           submit: 'Register',
           signUp: 'Register',
@@ -105,6 +111,9 @@ export default {
         edit: {
           submit: 'Save',
           title: 'Edit',
+        },
+        delete: {
+          submit: 'Delete',
         },
       },
       statuses: {

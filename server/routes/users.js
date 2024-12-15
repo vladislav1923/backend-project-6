@@ -21,6 +21,12 @@ export default (app) => {
         return reply.redirect('/session/new');
       }
 
+      if (req.user.id !== Number(req.params.id)) {
+        console.error('Cannot edit other users');
+        req.flash('error', i18next.t('flash.users.edit.forbidden'));
+        return reply.redirect(app.reverse('users'));
+      }
+
       const user = await app.objection.models.user.query().findById(req.params.id);
       delete user.passwordDigest;
       reply.render('users/edit', { user });
@@ -34,7 +40,7 @@ export default (app) => {
         const validUser = await app.objection.models.user.fromJson(req.body.data);
         await app.objection.models.user.query().insert(validUser);
         req.flash('info', i18next.t('flash.users.create.success'));
-        reply.redirect(app.reverse('root'));
+        reply.redirect(app.reverse('users'));
       } catch ({ data, message }) {
         console.error('Error during creating a user', message);
         req.flash('error', i18next.t('flash.users.create.error'));
@@ -43,7 +49,7 @@ export default (app) => {
 
       return reply;
     })
-    .post('/users/:id', { name: 'updateUser' }, async (req, reply) => {
+    .patch('/users/:id', { name: 'updateUser' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         console.error('Cannot update a user without authentication');
         req.flash('info', i18next.t('flash.authError'));
@@ -57,13 +63,19 @@ export default (app) => {
         return reply.redirect(app.reverse('users'));
       }
 
+      if (req.user.id !== Number(req.params.id)) {
+        console.error('Cannot update other users');
+        req.flash('error', i18next.t('flash.users.update.forbidden'));
+        return reply.redirect(app.reverse('users'));
+      }
+
       try {
         await user.$query().patch({
           ...req.body.data,
           updated_at: new Date(),
         });
         req.flash('info', i18next.t('flash.users.update.success'));
-        reply.redirect(app.reverse('root'));
+        reply.redirect(app.reverse('users'));
       } catch ({ data, message }) {
         console.error('Error during updating a user', message);
         req.flash('error', i18next.t('flash.users.update.error'));
@@ -86,9 +98,16 @@ export default (app) => {
         return reply.redirect(app.reverse('users'));
       }
 
+      if (req.user.id !== Number(req.params.id)) {
+        console.error('Cannot delete other users');
+        req.flash('error', i18next.t('flash.users.delete.forbidden'));
+        return reply.redirect(app.reverse('users'));
+      }
+
+      req.logOut();
       await user.$query().delete();
       req.flash('info', i18next.t('flash.users.delete.success'));
-      reply.redirect(app.reverse('root'));
+      reply.redirect(app.reverse('users'));
       return reply;
     });
 };

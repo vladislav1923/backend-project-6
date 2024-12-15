@@ -12,6 +12,7 @@ describe('test users CRUD', () => {
   let knex;
   let models;
   let cookies;
+  let user;
   const testData = getTestData();
 
   beforeAll(async () => {
@@ -33,6 +34,8 @@ describe('test users CRUD', () => {
         data: testData.users.existing,
       },
     });
+
+    user = await models.user.query().findOne({ email: testData.users.existing.email });
 
     const [sessionCookie] = responseSignIn.cookies;
     const { name, value } = sessionCookie;
@@ -76,29 +79,18 @@ describe('test users CRUD', () => {
       ..._.omit(params, 'password'),
       passwordDigest: encrypt(params.password),
     };
-    const user = await models.user.query().findOne({ email: params.email });
-    expect(user).toMatchObject(expected);
+    const newUser = await models.user.query().findOne({ email: params.email });
+    expect(newUser).toMatchObject(expected);
   });
 
   it('update', async () => {
-    const params = testData.users.new;
-    await app.inject({
-      method: 'POST',
-      url: app.reverse('users'),
-      payload: {
-        data: params,
-      },
-      cookies,
-    });
-
-    const user = await models.user.query().findOne({ email: params.email });
     const newEmail = 'new@email.com';
 
     const response = await app.inject({
-      method: 'POST',
+      method: 'PATCH',
       url: app.reverse('updateUser', { id: user.id }),
       payload: {
-        data: { ...params, email: newEmail },
+        data: { ...testData.users.existing, email: newEmail },
       },
       cookies,
     });
@@ -110,17 +102,6 @@ describe('test users CRUD', () => {
   });
 
   it('delete', async () => {
-    const params = testData.users.new;
-    await app.inject({
-      method: 'POST',
-      url: app.reverse('users'),
-      payload: {
-        data: params,
-      },
-      cookies,
-    });
-
-    const user = await models.user.query().findOne({ email: params.email });
     const response = await app.inject({
       method: 'DELETE',
       url: app.reverse('deleteUser', { id: user.id }),

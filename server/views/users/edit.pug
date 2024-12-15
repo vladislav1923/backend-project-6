@@ -5,7 +5,8 @@ block header
 
 block content
     +formFor()(action=`/users/${user.id}` method='post')
+        input(type='hidden' name='_method' value='PATCH')
         +input(user, 'firstName', t('views.users.firstName'), errors)(type="text")
         +input(user, 'lastName', t('views.users.lastName'), errors)(type="text")
         +input(user, 'email', t('views.users.email'), errors)(type="text")
-        +submit(user)(value=t('views.users.submit'))
+        +submit(user)(value=t('views.users.edit.submit'))
