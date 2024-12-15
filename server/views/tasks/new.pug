@@ -8,4 +8,5 @@ block content
         +input(user, 'name', t('views.tasks.name'), errors)(type="text")
         +input(user, 'description', t('views.tasks.description'), errors)(type="text")
         +select(user, 'statusId', t('views.tasks.status'), statuses, errors)()
+        +select(user, 'labels', t('views.tasks.labels'), labels, errors, true)()
         +submit(user)(value=t('views.tasks.new.submit'))

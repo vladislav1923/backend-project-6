@@ -134,6 +134,7 @@ export default {
         status: 'Status',
         creator: 'Creator',
         executor: 'Executor',
+        labels: 'Labels',
         createdAt: 'Created at',
         notAssigned: 'Not assigned',
         back: 'Back To The List',

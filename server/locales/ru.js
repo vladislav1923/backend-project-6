@@ -138,6 +138,7 @@ export default {
         status: 'Статус',
         creator: 'Автор',
         executor: 'Исполнитель',
+        labels: 'Метки',
         createdAt: 'Дата создания',
         notAssigned: 'Не назначена',
         back: 'Назад к списку',
