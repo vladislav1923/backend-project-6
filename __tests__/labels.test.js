@@ -20,6 +20,7 @@ describe('test labels CRUD', () => {
     await init(app);
     knex = app.objection.knex;
     models = app.objection.models;
+
     await knex.migrate.latest();
     await prepareData(app);
 
@@ -127,6 +128,50 @@ describe('test labels CRUD', () => {
     expect(response.statusCode).toBe(302);
     const deletedLabel = await models.label.query().findById(label.id);
     expect(deletedLabel).toBeUndefined();
+  });
+
+  it('tasks to labels', async () => {
+    const params = testData.labels.new;
+    await app.inject({
+      method: 'POST',
+      url: app.reverse('labels'),
+      payload: {
+        data: params,
+      },
+      cookies,
+    });
+
+    await app.inject({
+      method: 'POST',
+      url: app.reverse('statuses'),
+      payload: {
+        data: testData.statuses.inProgress,
+      },
+      cookies,
+    });
+
+    const user = await models.user.query().findOne({ email: testData.users.existing.email });
+    const status = await models.status.query().findOne({ name: testData.statuses.inProgress.name });
+    const label = await models.label.query().findOne({ name: params.name });
+
+    await app.inject({
+      method: 'POST',
+      url: app.reverse('tasks'),
+      payload: {
+        data: {
+          ...testData.tasks.new,
+          statusId: status.id,
+          creatorId: user.id,
+          labels: label.id.toString(),
+        },
+      },
+      cookies,
+    });
+
+    const task = await models.task.query().findOne({ name: testData.tasks.new.name });
+    const taskLabel = await models.taskLabel.query().findOne({ taskId: task.id });
+
+    expect(taskLabel.labelId).toBe(label.id);
   });
 
   afterEach(async () => {

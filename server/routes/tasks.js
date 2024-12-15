@@ -35,6 +35,7 @@ export default (app) => {
       }
 
       const task = new app.objection.models.task();
+      task.labels = [];
       const statuses = await app.objection.models.status.query();
       const statusesForSelect = statuses.map((status) => ({
         value: status.id,
@@ -45,6 +46,7 @@ export default (app) => {
         value: label.id,
         label: label.name,
       }));
+
       reply.render('tasks/new', { task, statuses: statusesForSelect, labels: labelsForSelect });
       return reply;
     })
@@ -114,10 +116,17 @@ export default (app) => {
         statusId: Number(req.body.data.statusId),
       });
 
+      const selectedLabels = [];
+      if (Array.isArray(req.body.data.labels)) {
+        selectedLabels.push(...req.body.data.labels);
+      } else if (req.body.data.labels) {
+        selectedLabels.push(req.body.data.labels);
+      }
+
       try {
         const validTask = await app.objection.models.task.fromJson(task);
         await app.objection.models.task.query().insert(validTask);
-        await Promise.all((req.body.data.labels || []).map(async (labelId) => {
+        await Promise.all((selectedLabels).map(async (labelId) => {
           const taskLabel = new app.objection.models.taskLabel();
           taskLabel.$set({
             taskId: validTask.id,
@@ -158,7 +167,7 @@ export default (app) => {
       const selectedLabels = [];
       if (Array.isArray(req.body.data.labels)) {
         selectedLabels.push(...req.body.data.labels);
-      } else if (typeof req.body.data.labels === 'string') {
+      } else if (req.body.data.labels) {
         selectedLabels.push(req.body.data.labels);
       }
 
