@@ -55,6 +55,20 @@ export default {
           success: 'Task deleted successfully',
         },
       },
+      labels: {
+        create: {
+          error: 'Failed to create label',
+          success: 'Label created successfully',
+        },
+        update: {
+          error: 'Failed to save changes',
+          success: 'Label updated successfully',
+        },
+        delete: {
+          error: 'Failed to delete label',
+          success: 'Label deleted successfully',
+        },
+      },
       authError: 'Access denied! Please login',
     },
     layouts: {
@@ -62,6 +76,7 @@ export default {
         users: 'Users',
         statuses: 'Statuses',
         tasks: 'Tasks',
+        labels: 'Labels',
         signIn: 'Login',
         signUp: 'Register',
         signOut: 'Logout',
@@ -136,6 +151,19 @@ export default {
         },
         one: {
           title: 'Task №',
+        },
+      },
+      labels: {
+        id: 'ID',
+        name: 'Name',
+        createdAt: 'Created at',
+        new: {
+          submit: 'Save',
+          title: 'Create New Label',
+        },
+        edit: {
+          submit: 'Save',
+          title: 'Edit',
         },
       },
     },
