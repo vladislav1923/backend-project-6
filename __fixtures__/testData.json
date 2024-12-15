@@ -26,5 +26,10 @@
         "name": "Task 1",
         "description": "Description for Task 1"
       }
+  },
+  "labels": {
+    "new": {
+      "name": "Label 1"
+    }
   }
 }
