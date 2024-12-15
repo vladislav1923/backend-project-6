@@ -9,7 +9,7 @@ block content
     p= t('views.tasks.status') + ': ' + getStatusName(status)
     p= t('views.tasks.creator') + ': ' + getUserName(creator)
     p= t('views.tasks.executor') + ': ' + (getUserName(executor) || t('views.tasks.notAssigned'))
-    p= t('views.tasks.labels') + ': ' + getLabelsNames(labels)
+    p= t('views.tasks.labels') + ': ' + (getLabelsNames(labels) || t('views.tasks.noLabels'))
     p= t('views.tasks.createdAt') + ': ' + formatDate(task.createdAt)
     a(href=`/tasks/${task.id}/edit`)= t('views.tasks.edit.title')
     br

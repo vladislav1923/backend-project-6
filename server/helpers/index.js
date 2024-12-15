@@ -40,6 +40,10 @@ export default (app) => ({
     return `${user?.firstName} ${user?.lastName}`;
   },
   getLabelsNames(labels) {
+    if (!labels || !labels.length) {
+      return null;
+    }
+
     return labels.map((label) => label.name).join(', ');
   },
 });

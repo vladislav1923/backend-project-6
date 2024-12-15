@@ -8,12 +8,20 @@ export default (app) => {
       const tasks = await app.objection.models.task.query();
       const statuses = await app.objection.models.status.query();
       const users = await app.objection.models.user.query();
-      const tasksForView = tasks.map((task) => ({
-        ...task,
-        id: task.id.toString(),
-        status: statuses.find((status) => status.id === task.statusId),
-        creator: users.find((user) => user.id === task.creatorId),
-        executor: users.find((user) => user.id === task.executorId),
+      const tasksForView = await Promise.all(tasks.map(async (task) => {
+        const labels = await app.objection.models.taskLabel.query()
+          .join('labels', 'tasks_labels.labelId', 'labels.id')
+          .where('tasks_labels.taskId', task.id)
+          .select('labels.*');
+
+        return {
+          ...task,
+          id: task.id.toString(),
+          status: statuses.find((status) => status.id === task.statusId),
+          creator: users.find((user) => user.id === task.creatorId),
+          executor: users.find((user) => user.id === task.executorId),
+          labels,
+        };
       }));
 
       reply.render('tasks/index', { tasks: tasksForView });
@@ -75,6 +83,9 @@ export default (app) => {
         .where('taskId', req.params.id)
         .select('labelId')
         .then((rows) => rows.map((row) => row.labelId));
+
+      console.log('TASK FOR VIEW', task);
+
       const statuses = await app.objection.models.status.query();
       const statusesForSelect = statuses.map((status) => ({
         value: status.id,
@@ -144,13 +155,20 @@ export default (app) => {
         statusId: Number(req.body.data.statusId),
       });
 
+      const selectedLabels = [];
+      if (Array.isArray(req.body.data.labels)) {
+        selectedLabels.push(...req.body.data.labels);
+      } else if (typeof req.body.data.labels === 'string') {
+        selectedLabels.push(req.body.data.labels);
+      }
+
       try {
         const validTask = await app.objection.models.task.fromJson(task);
         await task.$query().patch({ ...validTask, updated_at: new Date() });
         await app.objection.models.taskLabel.query()
           .where('taskId', validTask.id)
           .del();
-        await Promise.all((req.body.data.labels || []).map(async (labelId) => {
+        await Promise.all((selectedLabels).map(async (labelId) => {
           const taskLabel = new app.objection.models.taskLabel();
           taskLabel.$set({
             taskId: validTask.id,

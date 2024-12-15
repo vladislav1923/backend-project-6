@@ -141,6 +141,7 @@ export default {
         labels: 'Метки',
         createdAt: 'Дата создания',
         notAssigned: 'Не назначена',
+        noLabels: 'Отсутствуют',
         back: 'Назад к списку',
         new: {
           submit: 'Сохранить',

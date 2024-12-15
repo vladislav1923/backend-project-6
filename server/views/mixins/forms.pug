@@ -22,7 +22,7 @@ mixin input(entity, propertyName, propertyLabel, errors = {})
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
 
-mixin select(entity, propertyName, propertyLabel, options = [], errors = {}, isMultiple = false)
+mixin select(entity, propertyName, propertyLabel, options = [], errors = {})
   - propertyErrors = _.get(errors, propertyName)
   - classLine = 'form-control' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
   - inputId = getInputId(propertyName)
@@ -34,10 +34,29 @@ mixin select(entity, propertyName, propertyLabel, options = [], errors = {}, isM
       id= inputId
       name=getInputName(propertyName)
       class=classLine
-      multiple=isMultiple
     )&attributes(attributes)
       each option in options
         - const selected = _.get(entity, propertyName) === option.value ? 'selected' : ''
+        option(value=option.value selected=selected)= option.label
+    if !_.isEmpty(propertyErrors)
+      .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
+
+mixin multiple(entity, propertyName, propertyLabel, options = [], errors = {})
+  - propertyErrors = _.get(errors, propertyName)
+  - classLine = 'form-control' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
+  - inputId = getInputId(propertyName)
+  .mb-3(class=(errors[propertyName] && 'has-danger'))
+    label(
+      for= inputId
+    )= propertyLabel
+    select(
+      id= inputId
+      name=getInputName(propertyName)
+      class=classLine
+      multiple
+    )&attributes(attributes)
+      each option in options
+        - const selected = _.get(entity, propertyName).includes(option.value)
         option(value=option.value selected=selected)= option.label
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')

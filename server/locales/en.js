@@ -137,6 +137,7 @@ export default {
         labels: 'Labels',
         createdAt: 'Created at',
         notAssigned: 'Not assigned',
+        noLabels: 'None',
         back: 'Back To The List',
         new: {
           submit: 'Save',
