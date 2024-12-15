@@ -83,7 +83,6 @@ export default (app) => {
       try {
         const validTask = await app.objection.models.task.fromJson(task);
         await app.objection.models.task.query().insert(validTask);
-        console.log('TASK CREATED:', validTask);
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
       } catch ({ data, message }) {
@@ -113,7 +112,7 @@ export default (app) => {
 
       try {
         const validTask = await app.objection.models.task.fromJson(task);
-        await task.$query().patch(validTask);
+        await task.$query().patch({ ...validTask, updated_at: new Date() });
         req.flash('info', i18next.t('flash.tasks.update.success'));
         reply.redirect(app.reverse('tasks'));
       } catch ({ data, message }) {

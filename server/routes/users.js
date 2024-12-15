@@ -55,7 +55,10 @@ export default (app) => {
       }
 
       try {
-        await user.$query().patch(req.body.data);
+        await user.$query().patch({
+          ...req.body.data,
+          updated_at: new Date(),
+        });
         req.flash('info', i18next.t('flash.users.update.success'));
         reply.redirect(app.reverse('root'));
       } catch ({ data, message }) {
