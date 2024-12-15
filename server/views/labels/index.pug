@@ -1,7 +1,7 @@
 extends ../layouts/application.pug
 
 block content
-    a(href=route('newLabel'))= t('views.labels.new.title')
+    a.btn.btn-primary.mb-5(href=route('newLabel'))= t('views.labels.new.title')
     table.table.table-striped
         thead
             tr

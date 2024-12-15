@@ -120,6 +120,7 @@ export default {
         id: 'ID',
         name: 'Имя',
         createdAt: 'Дата создания',
+        actions: 'Действия',
         new: {
           submit: 'Сохранить',
           title: 'Создать новый статус',
@@ -127,6 +128,9 @@ export default {
         edit: {
           submit: 'Сохранить',
           title: 'Редатирование',
+        },
+        delete: {
+          submit: 'Удалить',
         },
       },
       welcome: {

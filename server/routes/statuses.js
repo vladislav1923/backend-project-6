@@ -28,7 +28,7 @@ export default (app) => {
       }
 
       const status = await app.objection.models.status.query().findById(req.params.id);
-      reply.render('status/edit', { status });
+      reply.render('statuses/edit', { status });
       return reply;
     })
     .post('/statuses', async (req, reply) => {
@@ -54,7 +54,7 @@ export default (app) => {
 
       return reply;
     })
-    .post('/statuses/:id', { name: 'updateStatus' }, async (req, reply) => {
+    .patch('/statuses/:id', { name: 'updateStatus' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         console.error('Cannot update a status without authentication');
         req.flash('info', i18next.t('flash.authError'));
@@ -71,7 +71,7 @@ export default (app) => {
       try {
         await status.$query().patch({ ...req.body.data, updated_at: new Date() });
         req.flash('info', i18next.t('flash.statuses.update.success'));
-        reply.redirect(app.reverse('root'));
+        reply.redirect(app.reverse('statuses'));
       } catch ({ data, message }) {
         console.error('Error during updating a status', message);
         req.flash('error', i18next.t('flash.statuses.update.error'));
@@ -96,7 +96,7 @@ export default (app) => {
 
       await status.$query().delete();
       req.flash('info', i18next.t('flash.statuses.delete.success'));
-      reply.redirect(app.reverse('root'));
+      reply.redirect(app.reverse('statuses'));
       return reply;
     });
 };

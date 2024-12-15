@@ -1,16 +1,22 @@
 extends ../layouts/application.pug
 
 block content
-    a(href=route('newStatus'))= t('views.statuses.new.title')
+    a.btn.btn-primary.mb-5(href=route('newStatus'))= t('views.statuses.new.title')
     table.table.table-striped
         thead
             tr
                 th= t('views.statuses.id')
                 th= t('views.statuses.name')
                 th= t('views.statuses.createdAt')
+                th= t('views.statuses.actions')
         tbody
             each status in statuses
                 tr
                     td= status.id
                     td= status.name
                     td= formatDate(status.createdAt)
+                    td.d-flex.flex-wrap.gap-2
+                        a.btn.btn-primary(href=`/statuses/${status.id}/edit`)= t('views.statuses.edit.title')
+                        form(action=`/statuses/${status.id}` method='POST')
+                            input(type='hidden' name='_method' value='DELETE')
+                            button.btn.btn-danger(type='submit')= t('views.statuses.delete.submit')

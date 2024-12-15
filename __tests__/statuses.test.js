@@ -92,7 +92,7 @@ describe('test statuses CRUD', () => {
     const newName = 'On Hold';
 
     const response = await app.inject({
-      method: 'POST',
+      method: 'PATCH',
       url: app.reverse('updateStatus', { id: status.id }),
       payload: {
         data: { name: newName },

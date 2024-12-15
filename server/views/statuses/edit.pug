@@ -5,5 +5,6 @@ block header
 
 block content
     +formFor()(action=`/statuses/${status.id}` method='post')
-        +input(user, 'name', t('views.statuses.name'), errors)(type="text")
-        +submit(user)(value=t('views.statuses.edit.submit'))
+        input(type='hidden' name='_method' value='PATCH')
+        +input(status, 'name', t('views.statuses.name'), errors)(type="text")
+        +submit(status)(value=t('views.statuses.edit.submit'))
