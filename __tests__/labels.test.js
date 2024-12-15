@@ -93,7 +93,7 @@ describe('test labels CRUD', () => {
     const newName = 'Label 2';
 
     const response = await app.inject({
-      method: 'POST',
+      method: 'PATCH',
       url: app.reverse('updateLabel', { id: label.id }),
       payload: {
         data: { name: newName },

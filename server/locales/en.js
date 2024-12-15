@@ -172,6 +172,7 @@ export default {
         id: 'ID',
         name: 'Name',
         createdAt: 'Created at',
+        actions: 'Actions',
         new: {
           submit: 'Save',
           title: 'Create New Label',
@@ -179,6 +180,9 @@ export default {
         edit: {
           submit: 'Save',
           title: 'Edit',
+        },
+        delete: {
+          submit: 'Delete',
         },
       },
     },

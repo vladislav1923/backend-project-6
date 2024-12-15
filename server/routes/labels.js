@@ -18,6 +18,17 @@ export default (app) => {
       reply.render('labels/new', { label });
       return reply;
     })
+    .get('/labels/:id/edit', { name: 'editLabel' }, async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        console.error('Cannot edit a label without authentication');
+        req.flash('info', i18next.t('flash.authError'));
+        return reply.redirect('/session/new');
+      }
+
+      const label = await app.objection.models.label.query().findById(req.params.id);
+      reply.render('labels/edit', { label });
+      return reply;
+    })
     .post('/labels', async (req, reply) => {
       if (!req.isAuthenticated()) {
         console.error('Cannot create a label without authentication');
@@ -41,7 +52,7 @@ export default (app) => {
 
       return reply;
     })
-    .post('/labels/:id', { name: 'updateLabel' }, async (req, reply) => {
+    .patch('/labels/:id', { name: 'updateLabel' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         console.error('Cannot update a label without authentication');
         req.flash('info', i18next.t('flash.authError'));
@@ -94,7 +105,7 @@ export default (app) => {
 
       await label.$query().delete();
       req.flash('info', i18next.t('flash.labels.delete.success'));
-      reply.redirect(app.reverse('root'));
+      reply.redirect(app.reverse('labels'));
       return reply;
     });
 };

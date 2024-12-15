@@ -8,9 +8,15 @@ block content
                 th= t('views.labels.id')
                 th= t('views.labels.name')
                 th= t('views.labels.createdAt')
+                th= t('views.labels.actions')
         tbody
             each label in labels
                 tr
                     td= label.id
                     td= label.name
                     td= formatDate(label.createdAt)
+                    td.d-flex.flex-wrap.gap-2
+                        a.btn.btn-primary(href=`/labels/${label.id}/edit`)= t('views.labels.edit.title')
+                        form(action=`/labels/${label.id}` method='POST')
+                            input(type='hidden' name='_method' value='DELETE')
+                            button.btn.btn-danger(type='submit')= t('views.labels.delete.submit')

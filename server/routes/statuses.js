@@ -94,6 +94,13 @@ export default (app) => {
         return reply.redirect(app.reverse('statuses'));
       }
 
+      const isUsed = await app.objection.models.task.query().where('status_id', status.id).first();
+      if (isUsed) {
+        console.error('Cannot delete a status that is in use');
+        req.flash('error', i18next.t('flash.statuses.delete.error'));
+        return reply.redirect(app.reverse('statuses'));
+      }
+
       await status.$query().delete();
       req.flash('info', i18next.t('flash.statuses.delete.success'));
       reply.redirect(app.reverse('statuses'));
