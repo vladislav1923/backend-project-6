@@ -9,6 +9,7 @@ export default (app) => {
     })
     .get('/labels/new', { name: 'newLabel' }, (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot return a label creation form without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -19,6 +20,7 @@ export default (app) => {
     })
     .post('/labels', async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot create a label without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -37,6 +39,32 @@ export default (app) => {
         reply.render('labels/new', { label, errors: data });
       }
 
+      return reply;
+    })
+    .delete('/labels/:id', { name: 'deleteLabel' }, async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        console.error('Cannot delete a label without authentication');
+        req.flash('info', i18next.t('flash.authError'));
+        return reply.redirect('/session/new');
+      }
+
+      const label = await app.objection.models.label.query().findById(req.params.id);
+      if (!label) {
+        console.error('Cannot delete a label that does not exist');
+        req.flash('error', i18next.t('flash.labels.delete.error'));
+        return reply.redirect(app.reverse('labels'));
+      }
+
+      const isUsed = await app.objection.models.tasklabel.where({ labelId: req.params.id }).first();
+      if (isUsed) {
+        console.error('Cannot delete a label that is in use');
+        req.flash('error', i18next.t('flash.labels.delete.error'));
+        return reply.redirect(app.reverse('labels'));
+      }
+
+      await label.$query().delete();
+      req.flash('info', i18next.t('flash.labels.delete.success'));
+      reply.redirect(app.reverse('root'));
       return reply;
     });
 };

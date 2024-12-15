@@ -11,6 +11,7 @@ export default (app) => {
     })
     .get('/statuses/new', { name: 'newStatus' }, (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot return a status creation form without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -21,6 +22,7 @@ export default (app) => {
     })
     .get('/statuses/:id/edit', { name: 'editStatus' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot edit a status without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -31,6 +33,7 @@ export default (app) => {
     })
     .post('/statuses', async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot create a status without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -53,12 +56,14 @@ export default (app) => {
     })
     .post('/statuses/:id', { name: 'updateStatus' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot update a status without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
 
       const status = await app.objection.models.status.query().findById(req.params.id);
       if (!status) {
+        console.error('Cannot update a status that does not exist');
         req.flash('error', i18next.t('flash.statuses.update.error'));
         return reply.redirect(app.reverse('statuses'));
       }
@@ -77,12 +82,14 @@ export default (app) => {
     })
     .delete('/statuses/:id', { name: 'deleteStatus' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot delete a status without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
 
       const status = await app.objection.models.status.query().findById(req.params.id);
       if (!status) {
+        console.error('Cannot delete a status that does not exist');
         req.flash('error', i18next.t('flash.statuses.delete.error'));
         return reply.redirect(app.reverse('statuses'));
       }

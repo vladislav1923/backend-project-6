@@ -16,6 +16,7 @@ export default (app) => {
     })
     .get('/users/:id/edit', { name: 'editUser' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot edit a user without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -44,12 +45,14 @@ export default (app) => {
     })
     .post('/users/:id', { name: 'updateUser' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot update a user without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
 
       const user = await app.objection.models.user.query().findById(req.params.id);
       if (!user) {
+        console.error('Cannot update a user that does not exist');
         req.flash('error', i18next.t('flash.users.update.error'));
         return reply.redirect(app.reverse('users'));
       }
@@ -71,12 +74,14 @@ export default (app) => {
     })
     .delete('/users/:id', { name: 'deleteUser' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot delete a user without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
 
       const user = await app.objection.models.user.query().findById(req.params.id);
       if (!user) {
+        console.error('Cannot delete a user that does not exist');
         req.flash('error', i18next.t('flash.users.delete.error'));
         return reply.redirect(app.reverse('users'));
       }

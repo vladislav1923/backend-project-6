@@ -14,6 +14,7 @@ export default (app) => {
       }
 
       if (!user) {
+        console.error('User not found');
         const signInForm = req.body.data;
         const errors = {
           email: [{ message: i18next.t('flash.session.create.error') }],

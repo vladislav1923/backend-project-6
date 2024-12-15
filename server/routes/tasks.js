@@ -21,6 +21,7 @@ export default (app) => {
     })
     .get('/tasks/new', { name: 'newTask' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot return a task creation form without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -36,6 +37,7 @@ export default (app) => {
     })
     .get('/tasks/:id', { name: 'oneTask' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot view a task without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -54,6 +56,7 @@ export default (app) => {
     })
     .get('/tasks/:id/edit', { name: 'editTask' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot edit a task without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -69,6 +72,7 @@ export default (app) => {
     })
     .post('/tasks', async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot create a task without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
@@ -95,12 +99,14 @@ export default (app) => {
     })
     .post('/tasks/:id', { name: 'updateTask' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot update a task without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
 
       const task = await app.objection.models.task.query().findById(req.params.id);
       if (!task) {
+        console.error('Cannot update a task that does not exist');
         req.flash('error', i18next.t('flash.tasks.update.error'));
         return reply.redirect(app.reverse('tasks'));
       }
@@ -125,12 +131,14 @@ export default (app) => {
     })
     .delete('/tasks/:id', { name: 'deleteTask' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
+        console.error('Cannot delete a task without authentication');
         req.flash('info', i18next.t('flash.authError'));
         return reply.redirect('/session/new');
       }
 
       const task = await app.objection.models.task.query().findById(req.params.id);
       if (!task) {
+        console.error('Cannot delete a task that does not exist');
         req.flash('error', i18next.t('flash.tasks.delete.error'));
         return reply.redirect(app.reverse('tasks'));
       }
