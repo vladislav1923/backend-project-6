@@ -131,7 +131,7 @@ describe('test tasks CRUD', () => {
     const newStatus = await models.status.query().findOne({ name: testData.statuses.onHold.name });
 
     const response = await app.inject({
-      method: 'POST',
+      method: 'PATCH',
       url: app.reverse('oneTask', { id: task.id }),
       payload: {
         data: {

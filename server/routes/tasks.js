@@ -36,6 +36,7 @@ export default (app) => {
 
       const task = new app.objection.models.task();
       task.labels = [];
+      task.executorId = '';
       const statuses = await app.objection.models.status.query();
       const statusesForSelect = statuses.map((status) => ({
         value: status.id,
@@ -46,8 +47,16 @@ export default (app) => {
         value: label.id,
         label: label.name,
       }));
+      const users = await app.objection.models.user.query();
+      const usersForSelect = users.map((user) => ({
+        value: user.id,
+        label: `${user.firstName} ${user.lastName}`,
+      }));
+      usersForSelect.unshift({ value: '', label: i18next.t('views.tasks.notAssigned') });
 
-      reply.render('tasks/new', { task, statuses: statusesForSelect, labels: labelsForSelect });
+      reply.render('tasks/new', {
+        task, statuses: statusesForSelect, labels: labelsForSelect, users: usersForSelect,
+      });
       return reply;
     })
     .get('/tasks/:id', { name: 'oneTask' }, async (req, reply) => {
@@ -85,8 +94,7 @@ export default (app) => {
         .where('taskId', req.params.id)
         .select('labelId')
         .then((rows) => rows.map((row) => row.labelId));
-
-      console.log('TASK FOR VIEW', task);
+      task.executorId = task.executorId || '';
 
       const statuses = await app.objection.models.status.query();
       const statusesForSelect = statuses.map((status) => ({
@@ -98,7 +106,16 @@ export default (app) => {
         value: label.id,
         label: label.name,
       }));
-      reply.render('tasks/edit', { task, statuses: statusesForSelect, labels: labelsForSelect });
+      const users = await app.objection.models.user.query();
+      const usersForSelect = users.map((user) => ({
+        value: user.id,
+        label: `${user.firstName} ${user.lastName}`,
+      }));
+      usersForSelect.unshift({ value: '', label: i18next.t('views.tasks.notAssigned') });
+
+      reply.render('tasks/edit', {
+        task, statuses: statusesForSelect, labels: labelsForSelect, users: usersForSelect,
+      });
       return reply;
     })
     .post('/tasks', async (req, reply) => {
@@ -114,7 +131,10 @@ export default (app) => {
         description: req.body.data.description,
         creatorId: req.user.id,
         statusId: Number(req.body.data.statusId),
+        executorId: req.body.data.executorId ? Number(req.body.data.executorId) : null,
       });
+
+      console.log('TASK : ', task);
 
       const selectedLabels = [];
       if (Array.isArray(req.body.data.labels)) {
@@ -144,7 +164,7 @@ export default (app) => {
 
       return reply;
     })
-    .post('/tasks/:id', { name: 'updateTask' }, async (req, reply) => {
+    .patch('/tasks/:id', { name: 'updateTask' }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         console.error('Cannot update a task without authentication');
         req.flash('info', i18next.t('flash.authError'));
@@ -162,6 +182,7 @@ export default (app) => {
         name: req.body.data.name,
         description: req.body.data.description,
         statusId: Number(req.body.data.statusId),
+        executorId: req.body.data.executorId ? Number(req.body.data.executorId) : null,
       });
 
       const selectedLabels = [];
@@ -211,7 +232,7 @@ export default (app) => {
 
       await task.$query().delete();
       req.flash('info', i18next.t('flash.tasks.delete.success'));
-      reply.redirect(app.reverse('root'));
+      reply.redirect(app.reverse('tasks'));
       return reply;
     });
 };

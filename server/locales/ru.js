@@ -152,6 +152,7 @@ export default {
         notAssigned: 'Не назначена',
         noLabels: 'Отсутствуют',
         back: 'Назад к списку',
+        actions: 'Действия',
         new: {
           submit: 'Сохранить',
           title: 'Создать новую задачу',
@@ -161,8 +162,7 @@ export default {
           title: 'Редатирование задачи',
         },
         delete: {
-          error: 'Задача не найдена',
-          success: 'Задача удалена',
+          submit: 'Удалить',
         },
         one: {
           title: 'Задача №',

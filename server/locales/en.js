@@ -152,17 +152,17 @@ export default {
         notAssigned: 'Not assigned',
         noLabels: 'None',
         back: 'Back To The List',
+        actions: 'Actions',
         new: {
           submit: 'Save',
           title: 'Create New Task',
         },
         edit: {
           submit: 'Save',
-          title: 'Edit Task',
+          title: 'Edit',
         },
         delete: {
-          error: 'Task not found',
-          success: 'Task deleted',
+          submit: 'Delete',
         },
         one: {
           title: 'Task №',

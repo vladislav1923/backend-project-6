@@ -13,6 +13,7 @@ block content
                 th= t('views.tasks.executor')
                 th= t('views.tasks.labels')
                 th= t('views.tasks.createdAt')
+                th= t('views.tasks.actions')
         tbody
             each task in tasks
                 tr
@@ -25,3 +26,8 @@ block content
                     td= getUserName(task.executor) || t('views.tasks.notAssigned')
                     td= getLabelsNames(task.labels) || t('views.tasks.noLabels')
                     td= formatDate(task.createdAt)
+                    td.d-flex.flex-wrap.gap-2
+                        a.btn.btn-primary(href=`/tasks/${task.id}/edit`)= t('views.tasks.edit.title')
+                        form(action=`/tasks/${task.id}` method='POST')
+                            input(type='hidden' name='_method' value='DELETE')
+                            button.btn.btn-danger(type='submit')= t('views.tasks.delete.submit')

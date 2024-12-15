@@ -1,12 +1,14 @@
 extends ../layouts/application.pug
 
 block header
-    = t('views.tasks.edit.title') + '№' + task.id
+    = t('views.tasks.edit.title') + ' № ' + task.id
 
 block content
     +formFor()(action=`/tasks/${task.id}` method='post')
+        input(type='hidden' name='_method' value='PATCH')
         +input(task, 'name', t('views.tasks.name'), errors)(type="text")
-        +input(task, 'description', t('views.tasks.description'), errors)(type="text")
+        +textarea(task, 'description', t('views.tasks.description'), errors)(type="text")
         +select(task, 'statusId', t('views.tasks.status'), statuses, errors)()
+        +select(task, 'executorId', t('views.tasks.executor'), users, errors)()
         +multiple(task, 'labels', t('views.tasks.labels'), labels, errors, true)()
         +submit(task)(value=t('views.tasks.edit.submit'))
