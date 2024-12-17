@@ -14,7 +14,7 @@ block content
     p= t('views.tasks.labels') + ': ' + (getLabelsNames(labels) || t('views.tasks.noLabels'))
     p= t('views.tasks.createdAt') + ': ' + formatDate(task.createdAt)
     div.d-flex.flex-wrap.gap-2
-        a.btn.btn-primary(href=`/tasks/${task.id}/edit`)= t('views.tasks.edit.title')
+        a.btn.btn-primary(href=`/tasks/${task.id}/edit`)= t('views.tasks.edit.submit')
         form(action=`/tasks/${task.id}` method='POST')
             input(type='hidden' name='_method' value='DELETE')
             button.btn.btn-danger(type='submit')= t('views.tasks.delete.submit')

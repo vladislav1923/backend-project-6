@@ -53,11 +53,11 @@ export default {
         },
         update: {
           error: 'Ошибка сохранения изменений',
-          success: 'Задача успешно обновлена',
+          success: 'Задача успешно изменена',
         },
         delete: {
           error: 'Не удалось удалить задачу',
-          success: 'Удаление задачи прошло успешно',
+          success: 'Задача успешно удалена',
         },
       },
       labels: {
@@ -143,7 +143,7 @@ export default {
       },
       tasks: {
         id: 'ID',
-        name: 'Имя',
+        name: 'Наименование',
         description: 'Описание',
         status: 'Статус',
         creator: 'Автор',
@@ -159,11 +159,11 @@ export default {
           submit: 'Показать',
         },
         new: {
-          submit: 'Сохранить',
-          title: 'Создать новую задачу',
+          submit: 'Создать',
+          title: 'Создать задачу',
         },
         edit: {
-          submit: 'Сохранить',
+          submit: 'Изменить',
           title: 'Редатирование задачи',
         },
         delete: {

@@ -103,7 +103,7 @@ mixin checkbox(entity, propertyName, propertyLabel, errors = {})
     .mb-3(class=(errors[propertyName] && 'has-danger'))
         label.form-check-label(
         for= inputId
-        )
+        )= propertyLabel
         input.form-check-input(
             id= inputId
             name=propertyName
@@ -111,7 +111,6 @@ mixin checkbox(entity, propertyName, propertyLabel, errors = {})
             type='checkbox'
             checked=_.get(entity, propertyName) === 'on'
         )&attributes(attributes)
-        | #{propertyLabel}
 
 mixin submit(form = null)
   input(class='btn btn-primary' type='submit')&attributes(attributes)
