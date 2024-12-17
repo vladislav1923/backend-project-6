@@ -52,7 +52,7 @@ mixin select(entity, propertyName, propertyLabel, options = [], errors = {})
       class=classLine
     )&attributes(attributes)
       each option in options
-        - const selected = _.get(entity, propertyName) === option.value ? 'selected' : ''
+        - const selected = _.get(entity, propertyName) === option.value
         option(value=option.value selected=selected)= option.label
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
@@ -73,6 +73,25 @@ mixin multiple(entity, propertyName, propertyLabel, options = [], errors = {})
     )&attributes(attributes)
       each option in options
         - const selected = _.get(entity, propertyName).includes(option.value)
+        option(value=option.value selected=selected)= option.label
+    if !_.isEmpty(propertyErrors)
+      .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
+
+mixin search(entity, propertyName, propertyLabel, options = [], errors = {})
+  - propertyErrors = _.get(errors, propertyName)
+  - classLine = 'form-control' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
+  - inputId = getInputId(propertyName)
+  .mb-3(class=(errors[propertyName] && 'has-danger'))
+    label(
+      for= inputId
+    )= propertyLabel
+    select(
+      id= inputId
+      name=propertyName
+      class=classLine
+    )&attributes(attributes)
+      each option in options
+        - const selected = _.get(entity, propertyName) === option.value
         option(value=option.value selected=selected)= option.label
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')

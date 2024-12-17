@@ -153,6 +153,9 @@ export default {
         noLabels: 'Отсутствуют',
         back: 'Назад к списку',
         actions: 'Действия',
+        search: {
+          submit: 'Показать',
+        },
         new: {
           submit: 'Сохранить',
           title: 'Создать новую задачу',

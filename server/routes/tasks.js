@@ -5,11 +5,27 @@ import i18next from 'i18next';
 export default (app) => {
   app
     .get('/tasks', { name: 'tasks' }, async (req, reply) => {
-      const tasks = await app.objection.models.task.query();
+      const query = app.objection.knex('tasks')
+        .leftJoin('tasks_labels', 'tasks.id', 'tasks_labels.task_id')
+        .distinct('tasks.id')
+        .select('tasks.*');
+
+      if (req.query.status) {
+        query.andWhere('tasks.status_id', Number(req.query.status));
+      }
+      if (req.query.executor) {
+        query.andWhere('tasks.executor_id', Number(req.query.executor));
+      }
+      if (req.query.label) {
+        query.where('tasks_labels.label_id', Number(req.query.label));
+      }
+
+      const tasks = await query;
       const statuses = await app.objection.models.status.query();
       const users = await app.objection.models.user.query();
+      const labels = await app.objection.models.label.query();
       const tasksForView = await Promise.all(tasks.map(async (task) => {
-        const labels = await app.objection.models.taskLabel.query()
+        const taskLabels = await app.objection.models.taskLabel.query()
           .join('labels', 'tasks_labels.labelId', 'labels.id')
           .where('tasks_labels.taskId', task.id)
           .select('labels.*');
@@ -20,11 +36,41 @@ export default (app) => {
           status: statuses.find((status) => status.id === task.statusId),
           creator: users.find((user) => user.id === task.creatorId),
           executor: users.find((user) => user.id === task.executorId),
-          labels,
+          labels: taskLabels,
         };
       }));
 
-      reply.render('tasks/index', { tasks: tasksForView });
+      const statusesForView = statuses.map((status) => ({
+        value: status.id,
+        label: status.name,
+      }));
+      statusesForView.unshift({ value: '', label: '' });
+
+      const usersForView = users.map((user) => ({
+        value: user.id,
+        label: `${user.firstName} ${user.lastName}`,
+      }));
+      usersForView.unshift({ value: '', label: '' });
+
+      const labelsForView = labels.map((label) => ({
+        value: label.id,
+        label: label.name,
+      }));
+      labelsForView.unshift({ value: '', label: '' });
+
+      const search = {
+        status: req.query.status ? Number(req.query.status) : '',
+        executor: req.query.executor ? Number(req.query.executor) : '',
+        label: req.query.label ? Number(req.query.label) : '',
+      };
+
+      reply.render('tasks/index', {
+        tasks: tasksForView,
+        search,
+        statuses: statusesForView,
+        users: usersForView,
+        labels: labelsForView,
+      });
       return reply;
     })
     .get('/tasks/new', { name: 'newTask' }, async (req, reply) => {

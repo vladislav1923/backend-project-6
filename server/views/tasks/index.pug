@@ -2,6 +2,15 @@ extends ../layouts/application.pug
 
 block content
     a.btn.btn-primary.mb-5(href=route('newTask'))= t('views.tasks.new.title')
+
+    div.card.shadow-sm.mb-5
+        div.card-body.p-4
+            form(action=route('tasks') method='GET')
+                +search(search, 'status', t('views.tasks.status'), statuses)()
+                +search(search, 'executor', t('views.tasks.executor'), users)()
+                +search(search, 'label', t('views.tasks.labels'), labels)()
+                +submit(search)(value=t('views.tasks.search.submit'))
+
     table.table.table-striped
         thead
             tr

@@ -153,6 +153,9 @@ export default {
         noLabels: 'None',
         back: 'Back To The List',
         actions: 'Actions',
+        search: {
+          submit: 'Search',
+        },
         new: {
           submit: 'Save',
           title: 'Create New Task',
