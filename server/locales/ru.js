@@ -99,6 +99,8 @@ export default {
       users: {
         id: 'ID',
         email: 'Email',
+        firstName: 'Имя',
+        lastName: 'Фамилия',
         name: 'Полное имя',
         password: 'Пароль',
         createdAt: 'Дата создания',
