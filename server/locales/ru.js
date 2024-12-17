@@ -90,7 +90,7 @@ export default {
     views: {
       session: {
         new: {
-          email: 'Почта',
+          email: 'Email',
           password: 'Пароль',
           signIn: 'Вход',
           submit: 'Войти',
