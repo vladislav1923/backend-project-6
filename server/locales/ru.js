@@ -111,7 +111,7 @@ export default {
         },
         edit: {
           submit: 'Сохранить',
-          title: 'Редатирование',
+          title: 'Изменить',
         },
         delete: {
           submit: 'Удалить',
