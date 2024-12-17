@@ -16,7 +16,7 @@ block content
                     td= status.name
                     td= formatDate(status.createdAt)
                     td.d-flex.flex-wrap.gap-2
-                        a.btn.btn-primary(href=`/statuses/${status.id}/edit`)= t('views.statuses.edit.title')
+                        a.btn.btn-primary(href=`/statuses/${status.id}/edit`)= t('views.statuses.edit.submit')
                         form(action=`/statuses/${status.id}` method='POST')
                             input(type='hidden' name='_method' value='DELETE')
                             button.btn.btn-danger(type='submit')= t('views.statuses.delete.submit')
