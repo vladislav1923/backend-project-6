@@ -24,7 +24,7 @@ export default (app) => {
       }
       await req.logIn(user);
       req.flash('success', i18next.t('flash.session.create.success'));
-      reply.redirect(app.reverse('protected'));
+      reply.redirect(app.reverse('root'));
       return reply;
     }))
     .delete('/session', (req, reply) => {
