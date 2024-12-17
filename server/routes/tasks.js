@@ -92,6 +92,7 @@ export default (app) => {
         value: status.id,
         label: status.name,
       }));
+      statusesForSelect.unshift({ value: '', label: '' });
       const labels = await app.objection.models.label.query();
       const labelsForSelect = labels.map((label) => ({
         value: label.id,
@@ -180,7 +181,7 @@ export default (app) => {
         name: req.body.data.name,
         description: req.body.data.description,
         creatorId: req.user.id,
-        statusId: Number(req.body.data.statusId),
+        statusId: req.body.data.statusId ? Number(req.body.data.statusId) : null,
         executorId: req.body.data.executorId ? Number(req.body.data.executorId) : null,
       });
 
