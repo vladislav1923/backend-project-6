@@ -9,6 +9,7 @@ block content
                 +search(search, 'status', t('views.tasks.status'), statuses)()
                 +search(search, 'executor', t('views.tasks.executor'), users)()
                 +search(search, 'label', t('views.tasks.labels'), labels)()
+                +checkbox(search, 'isCreatorUser', t('views.tasks.search.myTasks'), errors)()
                 +submit(search)(value=t('views.tasks.search.submit'))
 
     table.table.table-striped

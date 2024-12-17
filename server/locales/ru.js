@@ -154,6 +154,7 @@ export default {
         back: 'Назад к списку',
         actions: 'Действия',
         search: {
+          myTasks: 'Только мои задачи',
           submit: 'Показать',
         },
         new: {

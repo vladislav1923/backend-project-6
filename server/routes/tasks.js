@@ -19,6 +19,9 @@ export default (app) => {
       if (req.query.label) {
         query.where('tasks_labels.label_id', Number(req.query.label));
       }
+      if (req.query.isCreatorUser) {
+        query.andWhere('tasks.creator_id', req.user.id);
+      }
 
       const tasks = await query;
       const statuses = await app.objection.models.status.query();
@@ -62,6 +65,7 @@ export default (app) => {
         status: req.query.status ? Number(req.query.status) : '',
         executor: req.query.executor ? Number(req.query.executor) : '',
         label: req.query.label ? Number(req.query.label) : '',
+        isCreatorUser: req.query.isCreatorUser === 'on' ? 'on' : '',
       };
 
       reply.render('tasks/index', {

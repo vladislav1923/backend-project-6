@@ -96,6 +96,23 @@ mixin search(entity, propertyName, propertyLabel, options = [], errors = {})
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
 
+mixin checkbox(entity, propertyName, propertyLabel, errors = {})
+    - propertyErrors = _.get(errors, propertyName)
+    - classLine = 'form-check-input' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
+    - inputId = getInputId(propertyName)
+    .mb-3(class=(errors[propertyName] && 'has-danger'))
+        label.form-check-label(
+        for= inputId
+        )
+        input.form-check-input(
+            id= inputId
+            name=propertyName
+            class=classLine
+            type='checkbox'
+            checked=_.get(entity, propertyName) === 'on'
+        )&attributes(attributes)
+        | #{propertyLabel}
+
 mixin submit(form = null)
   input(class='btn btn-primary' type='submit')&attributes(attributes)
 

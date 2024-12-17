@@ -154,6 +154,7 @@ export default {
         back: 'Back To The List',
         actions: 'Actions',
         search: {
+          myTasks: 'Only my tasks',
           submit: 'Search',
         },
         new: {
