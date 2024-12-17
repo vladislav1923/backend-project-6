@@ -110,7 +110,7 @@ export default {
           signUp: 'Регистрация',
         },
         edit: {
-          submit: 'Сохранить',
+          submit: 'Изменить',
           title: 'Изменить',
         },
         delete: {
