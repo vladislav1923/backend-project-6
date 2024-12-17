@@ -34,7 +34,7 @@ export default {
       },
       statuses: {
         create: {
-          error: 'Не удалось создать новый статус',
+          error: 'Не удалось создать статус',
           success: 'Статус успешно создан',
         },
         update: {
