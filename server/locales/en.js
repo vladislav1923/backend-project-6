@@ -99,8 +99,7 @@ export default {
       users: {
         id: 'ID',
         email: 'Email',
-        firstName: 'First Name',
-        lastName: 'Last Name',
+        name: 'Full Name',
         password: 'Password',
         createdAt: 'Created at',
         actions: 'Actions',
