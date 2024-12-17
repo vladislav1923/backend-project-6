@@ -184,8 +184,6 @@ export default (app) => {
         executorId: req.body.data.executorId ? Number(req.body.data.executorId) : null,
       });
 
-      console.log('TASK : ', task);
-
       const selectedLabels = [];
       if (Array.isArray(req.body.data.labels)) {
         selectedLabels.push(...req.body.data.labels);

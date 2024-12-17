@@ -186,4 +186,8 @@ describe('test tasks CRUD', () => {
     const deletedTask = await models.task.query().findById(task.id);
     expect(deletedTask).toBeUndefined();
   });
+
+  afterAll(async () => {
+    await app.close();
+  });
 });
