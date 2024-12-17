@@ -17,7 +17,7 @@ block content
           td= user.email
           td= formatDate(user.createdAt)
           td.d-flex.flex-wrap.gap-2
-            a.btn.btn-primary(href=`/users/${user.id}/edit`)= t('views.users.edit.title')
+            a.btn.btn-primary(href=`/users/${user.id}/edit`)= t('views.users.edit.submit')
             form(action=`/users/${user.id}` method='POST')
               input(type='hidden' name='_method' value='DELETE')
               button.btn.btn-danger(type='submit')= t('views.users.delete.submit')
