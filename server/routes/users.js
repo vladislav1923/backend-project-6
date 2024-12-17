@@ -70,8 +70,9 @@ export default (app) => {
       }
 
       try {
+        const validUser = await app.objection.models.user.fromJson(req.body.data);
         await user.$query().patch({
-          ...req.body.data,
+          ...validUser,
           updated_at: new Date(),
         });
         req.flash('info', i18next.t('flash.users.update.success'));
