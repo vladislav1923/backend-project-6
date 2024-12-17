@@ -179,12 +179,12 @@ export default {
         createdAt: 'Дата создания',
         actions: 'Действия',
         new: {
-          submit: 'Сохранить',
-          title: 'Создать новую метку',
+          submit: 'Создать',
+          title: 'Создать метку',
         },
         edit: {
-          submit: 'Сохранить',
-          title: 'Редатирование',
+          submit: 'Изменить',
+          title: 'Изменить метку',
         },
         delete: {
           submit: 'Удалить',
